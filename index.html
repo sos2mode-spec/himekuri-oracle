@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日めくりオラクル</title>
+
+<style>
+#walk{
+    display:none;
+    position:relative;
+    left:0px;
+    opacity:1;
+    font-size:56px;
+    font-weight:bold;
+    color:#8B5A2B;
+}
+</style>
+
+</head>
+
+<body style="font-size:24px; text-align:center;">
+
+<img id="dog"
+     src="GWNZ1663.PNG"
+     style="
+        position:relative;
+        left:700px;
+        width:320px;
+        transition:all 0.5s;
+     ">
+
+<h1 style="font-size:56px;">日めくりオラクル</h1>
+
+<p style="font-size:42px; font-weight:bold;">
+今日の一枚届ける…ワン🐾
+</p>
+
+<div
+    id="startButton"
+    onclick="nobi()"
+    style="
+        text-align:center;
+        cursor:pointer;
+        margin-top:30px;
+    ">
+
+    <img
+    id="pawButton"
+    src="paw_button.png"
+    style="
+        width:140px;
+        transition:0.15s;
+    ">
+
+    <p style="
+        margin-top:10px;
+        font-size:28px;
+        color:#8B5A2B;
+        font-weight:bold;
+
+    ">
+        タッチして<br>
+        今日の一枚
+    </p>
+
+</div>
+
+
+
+
+<div id="result"
+     style="
+        display:none;
+        margin-top:40px;
+        text-align:center;
+     ">
+
+    <div>
+
+    <img id="card"
+         src="card_balance.jpg"
+         style="
+            width:45%;
+            max-width:260px;
+            vertical-align:middle;
+         ">
+
+    <img id="dog2"
+         src="dog_chokon.png"
+         style="
+            width:45%;
+            max-width:260px;
+            margin-left:10px;
+            vertical-align:middle;
+         ">
+
+</div>
+
+    <h2 id="cardTitle"
+        style="
+            margin-top:30px;
+            font-size:42px;
+            color:#8B5A2B;
+        ">
+    </h2>
+    <h3 style="color:#8B5A2B;">
+🌿 一日の流れ
+</h3>
+
+    <p id="flow"
+       style="
+          font-size:26px;
+          line-height:1.8;
+       ">
+</p>
+
+    <h3 style="color:#8B5A2B;">
+💌 メッセージ
+</h3>
+
+ <p id="message"
+       style="
+          font-size:26px;
+          line-height:1.8;
+       ">
+</p> 
+<p id="today"
+   style="
+      margin-top:25px;
+      font-size:20px;
+      color:#8B5A2B;
+   ">
+</p>  
+
+</div>
+
+
+
+<p id="walk">
+🐾 とことこ…
+</p>
+
+
+
+<script>
+
+// バランスカードの内容
+const balanceCard = {
+    image: "card_balance.jpg",
+    title: "✨ バランス ✨",
+    flow: "今日は調和を意識すると、穏やかな一日になりそうです。",
+    message: "焦らず、自分のペースで。\n無理をしないことが今日の鍵です。"
+};
+
+// 太陽カードの内容
+const sunCard = {
+    image: "card_sun.jpg",
+    title: "☀️ 太陽 ☀️",
+    flow: "素直に楽しめる出来事が起こりやすい一日になりそうです。",
+    message: "もうすでに持っている幸せに気づけば、\nこれからの道ももっと明るく見えてきます。\n\n足りないものより、\n今ある光を数えてみてください。"
+};
+
+// 力カードの内容
+const strengthCard = {
+    image: "card_strength.jpg",
+    title: "💪 力 💪",
+    flow: "物事を前向きに行動へと移せる一日になりそうです。",
+    message: "否定ではなく、ありのままを受け入れる。\n\nあなたの本当の強さが、未来を動かし始めます。"
+};
+
+
+// カード一覧
+const cards = [
+    balanceCard,
+    sunCard,
+    strengthCard
+];
+
+function nobi() {
+
+const paw = document.getElementById("pawButton");
+
+// ぷにゅっと縮む
+paw.style.transform = "scale(0.9)";
+
+setTimeout(function () {
+    document.getElementById("startButton").style.display = "none";
+}, 120);
+
+// 今日の日付を作る
+const today = new Date().toLocaleDateString();
+
+// 保存されている日付
+const savedDate = localStorage.getItem("oracleDate");
+
+// 保存されているカード番号
+let cardIndex = localStorage.getItem("oracleCard");
+
+// 日付が変わった、または初回なら新しく選ぶ
+if (savedDate !== today || cardIndex === null) {
+
+    cardIndex = Math.floor(Math.random() * cards.length);
+
+    localStorage.setItem("oracleDate", today);
+    localStorage.setItem("oracleCard", cardIndex);
+}
+
+// 今日のカード
+const selectedCard = cards[cardIndex];
+
+    document.getElementById("dog").src = "dog_okiru.png";
+
+    setTimeout(function () {
+
+    const dog = document.getElementById("dog");
+
+    dog.src = "dog_nobi.png";
+
+    // のびだけ少し大きく
+    dog.style.width = "360px";
+
+}, 2000);
+
+
+   
+
+setTimeout(function () {
+
+    const dog = document.getElementById("dog");
+    const walk = document.getElementById("walk");
+
+    // 元の大きさへ戻す
+dog.style.width = "320px";
+
+// 歩く画像に変更
+dog.src = "dog_walk.png";
+
+    walk.style.display = "block";
+    walk.style.opacity = "1";
+
+    // 犬は右側からスタート
+    let dogX = 700;
+
+    // とことこ文字は犬の少し左下
+    let walkX = 650;
+
+    let fade = 1;
+
+    dog.style.left = dogX + "px";
+    walk.style.left = walkX + "px";
+
+    const timer = setInterval(function () {
+
+        // 犬も文字も左へ同じ速度で動く
+        dogX -= 8;
+        walkX -= 8;
+
+        dog.style.left = dogX + "px";
+        walk.style.left = walkX + "px";
+
+        fade -= 0.015;
+        walk.style.opacity = fade;
+
+
+        if (dogX <= 350) {
+    clearInterval(timer);
+
+    walk.style.display = "none";
+
+    // 1秒後 ちょこん
+    setTimeout(function () {
+        dog.src = "dog_chokon.png";
+    }, 1000);
+
+    // 4秒後 めくる
+    setTimeout(function () {
+        dog.src = "dog_mekuru.png";
+    }, 4000);
+
+    // 6秒後 カード表示
+    setTimeout(function () {
+
+        // めくる犬を消す
+dog.style.display = "none";
+
+// 選ばれたカードを表示
+document.getElementById("card").src = selectedCard.image;
+
+document.getElementById("cardTitle").innerHTML = selectedCard.title;
+document.getElementById("flow").innerHTML = selectedCard.flow;
+document.getElementById("message").innerHTML = selectedCard.message.replace(/\n/g,"<br>");
+
+document.getElementById("today").innerHTML =
+"今日のカード<br>" + today;
+
+// カードとちょこんを表示
+document.getElementById("result").style.display = "block";
+
+    }, 6000);
+}
+
+    }, 80);
+
+}, 6000);
+
+}
+
+</script>
+</body>
+</html>
