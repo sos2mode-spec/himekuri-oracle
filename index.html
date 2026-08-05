@@ -11,7 +11,7 @@
     position:relative;
     left:0px;
     opacity:1;
-    font-size:56px;
+    font-size:32px;
     font-weight:bold;
     color:#8B5A2B;
 }
@@ -218,7 +218,7 @@ const selectedCard = cards[cardIndex];
     dog.src = "dog_nobi.png";
 
     // のびだけ少し大きく
-    dog.style.width = "150px";
+    dog.style.width = "130px";
 
 }, 2000);
 
@@ -253,8 +253,8 @@ dog.src = "dog_walk.png";
     const timer = setInterval(function () {
 
         // 犬も文字も左へ同じ速度で動く
-        dogX -= 2;
-        walkX -= 2;
+        dogX -= 1;
+        walkX -= 1;
 
         dog.style.left = dogX + "px";
         walk.style.left = walkX + "px";
@@ -263,7 +263,7 @@ dog.src = "dog_walk.png";
         walk.style.opacity = fade;
 
 
-        if (dogX <= 220) {
+        if (dogX <= 190) {
     clearInterval(timer);
 
     walk.style.display = "none";
