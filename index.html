@@ -240,7 +240,7 @@ dog.src = "dog_walk.png";
     walk.style.opacity = "1";
 
     // 犬は右側からスタート
-    let dogX = 120;
+    let dogX = 80;
 
     // とことこ文字は犬の少し左下
     let walkX = 20;
@@ -253,8 +253,8 @@ dog.src = "dog_walk.png";
     const timer = setInterval(function () {
 
         // 犬も文字も左へ同じ速度で動く
-        dogX -= 8;
-        walkX -= 8;
+        dogX -= 4;
+        walkX -= 4;
 
         dog.style.left = dogX + "px";
         walk.style.left = walkX + "px";
