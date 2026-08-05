@@ -240,67 +240,73 @@ dog.src = "dog_walk.png";
     walk.style.opacity = "1";
 
     // 犬は右側からスタート
-    let dogX = 20;
+let dogX = 10;
 
-    // とことこ文字は犬の少し左下
-    let walkX = -20;
+// とことこ文字は犬の少し左下
+let walkX = -40;
 
-    let fade = 1;
+let fade = 1;
+
+dog.style.left = dogX + "px";
+walk.style.left = walkX + "px";
+
+const timer = setInterval(function () {
+
+    // 犬も文字も左へ同じ速度で動く
+    dogX -= 1;
+    walkX -= 1;
 
     dog.style.left = dogX + "px";
     walk.style.left = walkX + "px";
 
-    const timer = setInterval(function () {
+    // とことこはゆっくり消える
+    fade -= 0.005;
+    walk.style.opacity = fade;
 
-        // 犬も文字も左へ同じ速度で動く
-        dogX -= 1;
-        walkX -= 1;
+    // 画面中央付近まで歩く
+    if (dogX <= 170) {
 
-        dog.style.left = dogX + "px";
-        walk.style.left = walkX + "px";
+        clearInterval(timer);
 
-        fade -= 0.015;
-        walk.style.opacity = fade;
+        // とことこは少し残してから消す
+        setTimeout(function () {
+            walk.style.display = "none";
+        }, 2000);
+               // 2秒後 ちょこん
+        setTimeout(function () {
+            dog.src = "dog_chokon.png";
+        }, 2000);
 
+        // 4秒後 めくる
+        setTimeout(function () {
+            dog.src = "dog_mekuru.png";
+        }, 4000);
 
-        if (dogX <= 190) {
-    clearInterval(timer);
+        // 6秒後 カード表示
+        setTimeout(function () {
 
-    walk.style.display = "none";
+            // めくる犬を消す
+            dog.style.display = "none";
 
-    // 1秒後 ちょこん
-    setTimeout(function () {
-        dog.src = "dog_chokon.png";
-    }, 1000);
+            // 選ばれたカードを表示
+            document.getElementById("card").src = selectedCard.image;
 
-    // 4秒後 めくる
-    setTimeout(function () {
-        dog.src = "dog_mekuru.png";
-    }, 4000);
+            document.getElementById("cardTitle").innerHTML = selectedCard.title;
+            document.getElementById("flow").innerHTML = selectedCard.flow;
+            document.getElementById("message").innerHTML =
+                selectedCard.message.replace(/\n/g, "<br>");
 
-    // 6秒後 カード表示
-    setTimeout(function () {
+            document.getElementById("today").innerHTML =
+                "今日のカード<br>" + today;
 
-        // めくる犬を消す
-dog.style.display = "none";
+            // カードとちょこんを表示
+            document.getElementById("result").style.display = "block";
 
-// 選ばれたカードを表示
-document.getElementById("card").src = selectedCard.image;
+        }, 6000);
 
-document.getElementById("cardTitle").innerHTML = selectedCard.title;
-document.getElementById("flow").innerHTML = selectedCard.flow;
-document.getElementById("message").innerHTML = selectedCard.message.replace(/\n/g,"<br>");
+    }
 
-document.getElementById("today").innerHTML =
-"今日のカード<br>" + today;
-
-// カードとちょこんを表示
-document.getElementById("result").style.display = "block";
-
-    }, 6000);
-}
-
-    }, 80);
+}, 80); 
 
 }, 6000);
 
