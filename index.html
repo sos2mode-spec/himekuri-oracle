@@ -248,7 +248,9 @@ let walkX = -40;
 let fade = 1;
 
 dog.style.left = dogX + "px";
-walk.style.left = walkX + "px";
+
+// とことこ文字だけゆっくり流す
+walk.style.left = (walkX - fade * 80) + "px";
 
 const timer = setInterval(function () {
 
