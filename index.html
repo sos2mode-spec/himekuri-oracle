@@ -349,13 +349,39 @@ const savedDate = localStorage.getItem("oracleDate");
 // 保存されているカード番号
 let cardIndex = localStorage.getItem("oracleCard");
 
+// 直近に出たカードの履歴
+let oracleHistory = JSON.parse(
+    localStorage.getItem("oracleHistory") || "[]"
+);
+
 // 日付が変わった、または初回なら新しく選ぶ
 if (savedDate !== today || cardIndex === null) {
 
-    cardIndex = Math.floor(Math.random() * cards.length);
+    // 直近2枚を除外
+    const availableCards = cards
+        .map((card, index) => index)
+        .filter(index => !oracleHistory.includes(index));
 
+    // 選べるカードの中からランダムに選ぶ
+    const randomIndex = Math.floor(
+        Math.random() * availableCards.length
+    );
+
+    cardIndex = availableCards[randomIndex];
+
+    // 履歴に今日のカードを追加
+    oracleHistory.push(Number(cardIndex));
+
+    // 直近2枚だけ保存
+    oracleHistory = oracleHistory.slice(-2);
+
+    // 保存
     localStorage.setItem("oracleDate", today);
     localStorage.setItem("oracleCard", cardIndex);
+    localStorage.setItem(
+        "oracleHistory",
+        JSON.stringify(oracleHistory)
+    );
 }
 
 // 今日のカード
